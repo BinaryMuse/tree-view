@@ -4,6 +4,7 @@ module.exports =
   configDefaults:
     hideVcsIgnoredFiles: false
     hideIgnoredNames: false
+    attach: true
 
   treeView: null
 
@@ -32,7 +33,9 @@ module.exports =
     @treeView
 
   shouldAttach: ->
-    if atom.workspaceView.getActivePaneItem()
+    if not config.get('tree-view.attach')
+      false
+    else if atom.workspaceView.getActivePaneItem()
       false
     else if path.basename(atom.project.getPath()) is '.git'
       # Only attach when the project path matches the path to open signifying
